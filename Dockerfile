@@ -12,9 +12,22 @@ RUN apt-get update && \
       procps \
       iproute2 \
       zlib1g-dev \
+      swig \
+      git \
+      python3-dev \
       libjpeg-dev \
       wget ca-certificates && \
     rm -rf /var/lib/apt/lists/*
+
+
+RUN git clone https://github.com/joan2937/lg \
+    /tmp/lg \
+    && cd /tmp/lg \
+    && make \
+    && make install \
+    && ldconfig
+
+RUN pip install --upgrade pip setuptools wheel
 
 RUN pip install --no-cache-dir \
       adafruit-blinka \
