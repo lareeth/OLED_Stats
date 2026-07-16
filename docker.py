@@ -64,8 +64,8 @@ def get_docker_count():
 image = Image.new("1", (oled.width, oled.height))
 draw = ImageDraw.Draw(image)
 
-font = ImageFont.truetype("PixelOperator.ttf", FONT_SZ)
-
+# font = ImageFont.truetype("PixelOperator.ttf", FONT_SZ)
+font = ImageFont.load_default()
 
 last_frame = None
 
