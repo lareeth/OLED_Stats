@@ -23,7 +23,8 @@ RUN pip install --no-cache-dir \
       RPi.GPIO \
       gpiozero \
       smbus \
-      psutil
+      psutil \
+      lgpio
 
 WORKDIR /opt/stats
 
