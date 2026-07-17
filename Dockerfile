@@ -37,7 +37,8 @@ RUN pip install --no-cache-dir \
       gpiozero \
       smbus \
       psutil \
-      lgpio
+      lgpio \
+      docker
 
 WORKDIR /opt/stats
 

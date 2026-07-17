@@ -6,7 +6,8 @@ import time
 import atexit
 import signal
 import socket
-import subprocess
+import docker
+from docker.errors import DockerException
 
 import board
 import digitalio
@@ -34,6 +35,12 @@ if rotation == 2:
     except AttributeError:
         oled.rotation = 2
 
+try:
+    docker_client = docker.DockerClient(base_url="unix:///var/run/docker.sock")
+    # Test the connection once at startup
+    docker_client.ping()
+except DockerException:
+    docker_client = None
 
 def cleanup():
     try:
@@ -58,13 +65,12 @@ def get_ip():
 
 
 def get_docker_count():
+    if docker_client is None:
+        return 0
+
     try:
-        result = subprocess.check_output(
-            ["docker", "ps", "-q"],
-            text=True
-        )
-        return len(result.splitlines())
-    except Exception:
+        return len(docker_client.containers.list())
+    except DockerException:
         return 0
 
 
@@ -90,14 +96,14 @@ while True:
 
         draw.text(
             (0, 0),
-            f"IP {ip}",
+            f"IP: {ip}",
             font=font,
             fill=255
         )
 
         draw.text(
             (0, 16),
-            f"Docker {containers}",
+            f"Container: {containers}",
             font=font,
             fill=255
         )
