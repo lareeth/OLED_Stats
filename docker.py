@@ -25,7 +25,7 @@ oled = adafruit_ssd1306.SSD1306_I2C(
     HEIGHT,
     board.I2C(),
     addr=0x3C,
-    reset=digitalio.DigitalInOut(board.D4)
+    reset=None
 )
 
 rotation = int(os.environ.get("OLED_ROTATION", "1"))
