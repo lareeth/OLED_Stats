@@ -24,8 +24,15 @@ oled = adafruit_ssd1306.SSD1306_I2C(
     HEIGHT,
     board.I2C(),
     addr=0x3C,
-    reset=None
+    reset=digitalio.DigitalInOut(board.D4)
 )
+
+rotation = int(os.environ.get("OLED_ROTATION", "1"))
+if rotation == 2:
+    try:
+        oled.rotate(2)
+    except AttributeError:
+        oled.rotation = 2
 
 
 def cleanup():
